@@ -195,7 +195,7 @@ def search(dataset=None):
 
                 # get categories
                 if not cat_ids:
-                    cats = request.query.cat or None
+                    cats = request.query.cat or "3010,3030,3040"
                     cat_ids = cats.split(',')
 
                 if cat_ids:
