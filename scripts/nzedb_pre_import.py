@@ -148,7 +148,7 @@ def process(precsv, processingFile=None):
     precsv["nuked"].replace("4", "1", inplace=True)
     precsv["nuked"].replace("5", "1", inplace=True)
     precsv["nuked"].replace("69", "0", inplace=True)
-    precsv.replace(".\\N$", '', inplace=True, regex=True)
+    precsv.replace(r".[\N]$", '', inplace=True, regex=True)
 
     # Sometimes there are duplicates within the table itself, remove them
     precsv.drop_duplicates(subset='name', keep="last", inplace=True)

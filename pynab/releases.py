@@ -289,11 +289,13 @@ def process():
 
                 # check against minimum size for this group
                 undersized = False
-                for size, groups in config.postprocess.get('min_size', {}).items():
-                    if binary.group_name in groups:
-                        if release.size < size:
-                            undersized = True
-                            break
+                #for size, groups in config.postprocess.get('min_size', {}).items():
+                if ('lossless' in binary.group_name) or ('flac' in binary.group_name):
+                    if release.size < 20000000:
+                        undersized = True
+                else:
+                    if release.size < 10000000:
+                        undersized = True
 
                 if undersized:
                     log.debug('release: [{}] - removed (smaller than minimum size for group)'.format(

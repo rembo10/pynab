@@ -1,7 +1,7 @@
 import time
 import pyhashxx
 
-import regex
+import re
 from sqlalchemy import *
 
 from pynab.db import db_session, Binary, Part, Regex, windowed_query
@@ -9,9 +9,9 @@ from pynab import log
 import config
 
 
-PART_REGEX = regex.compile(
-    '[\[\( ]((\d{1,3}\/\d{1,3})|(\d{1,3} of \d{1,3})|(\d{1,3}-\d{1,3})|(\d{1,3}~\d{1,3}))[\)\] ]', regex.I)
-XREF_REGEX = regex.compile('^([a-z0-9\.\-_]+):(\d+)?$', regex.I)
+PART_REGEX = re.compile(
+    '[\[\( ]((\d{1,3}\/\d{1,3})|(\d{1,3} of \d{1,3})|(\d{1,3}-\d{1,3})|(\d{1,3}~\d{1,3}))[\)\] ]', re.I)
+XREF_REGEX = re.compile('^([a-z0-9\.\-_]+):(\d+)?$', re.I)
 
 
 def generate_hash(name, group_name, posted_by, total_parts):
@@ -103,9 +103,9 @@ def process():
                 r = reg.regex
                 flags = r[r.rfind('/') + 1:]
                 r = r[r.find('/') + 1:r.rfind('/')]
-                regex_flags = regex.I if 'i' in flags else 0
+                regex_flags = re.I if 'i' in flags else 0
                 try:
-                    compiled_regex[reg.id] = regex.compile(r, regex_flags)
+                    compiled_regex[reg.id] = re.compile(r, regex_flags)
                 except Exception as e:
                     log.error('binary: broken regex detected. id: {:d}, removing...'.format(reg.id))
                     db.query(Regex).filter(Regex.id==reg.id).delete()

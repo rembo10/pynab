@@ -101,15 +101,25 @@ def extract_features(name):
 
 def determine_category(name, group_name=''):
     """Categorise release based on release name and group name."""
-    features = extract_features(name)
-    features['name'] = name
-    features['group'] = group_name
-
-    category = int(CATEGORISER.classify(features))
-
-    log.debug('category: ({}) [{}]: {}'.format(
-        group_name,
-        name,
-        category
-    ))
-    return category
+#    features = extract_features(name)
+#    features['name'] = name
+#    features['group'] = group_name
+#
+#    category = int(CATEGORISER.classify(features))
+#
+#    log.debug('category: ({}) [{}]: {}'.format(
+#        group_name,
+#        name,
+#        category
+#    ))
+#    return category
+    if group_name:
+        if ('lossless' in group_name.lower()) or ('flac' in group_name.lower()):
+            return 3040
+        if 'audiobook' in group_name.lower():
+            return 3030
+    if ('flac' in name.lower()) or ('lossless' in name.lower()):
+        return 3040
+    if 'audiobook' in name.lower():
+        return 3030
+    return 3010

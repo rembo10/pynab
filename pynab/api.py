@@ -85,7 +85,8 @@ def get_nzb(dataset=None):
             id = request.query.id or None
 
         # couchpotato doesn't support nzb.gzs, so decompress them
-        decompress = 'CouchPotato' in request.headers.get('User-Agent')
+        #decompress = 'CouchPotato' in request.headers.get('User-Agent')
+        decompress = True
 
         if id:
             with db_session() as db:
